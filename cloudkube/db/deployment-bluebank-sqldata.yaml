@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluebank-sqldata2-deployment
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+     app: bluebank-sqldata2
+  template:
+    metadata:
+      labels:
+        app: bluebank-sqldata2       
+    spec:
+      containers:
+        - name: bluebank-sqldata2
+          image: pm44019/sqldatabluebank:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 1433
+              name: sqldata2
+          #read envars from secret file
+          envFrom:
+            - secretRef:
+                name: sqldata2-secret

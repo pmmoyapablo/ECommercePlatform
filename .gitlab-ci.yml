@@ -1,0 +1,48 @@
+stages:
+  - test
+  - build
+  - deploy
+
+testing:
+  stage: test
+  script:
+    - cd ECommerce.Api.ProductCatalog.Test/
+    #- dotnet add package coverlet.msbuild --version 3.1.2
+    #- dotnet tool install -g dotnet-reportgenerator-globaltool
+    - dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
+    #- reportgenerator -reports:"./coverage.opencover.xml" -targetdir:"coveragereport" -reporttypes:Html
+  tags:
+    - linux
+
+building:
+  stage: build
+  script:
+    - sudo docker-compose build
+  tags:
+    - linux
+
+deployment_push:
+  stage: deploy
+  script:
+    #- sudo docker push pm44019/sqldatabluebank:v1  #Base de Datos
+    - sudo docker push pm44019/bluebankbancaserviceswebapi:v4  #Banckend
+    - sudo docker push pm44019/bluebankbancafe:v4  #Frontend
+  tags:
+    - linux
+  only:
+    - master
+
+deployment_cloud:
+  stage: deploy
+  script:
+    - cd cloudkube/
+    - sudo kubectl apply -f ./ #Deployments
+    #- cd ..
+    #- kubectl run bluebankback --image=pm44019/bluebankbancaserviceswebapi:v4 --port=80 80  #Pod Backend
+    #- kubectl expose pod bluebankback --type=LoadBalancer --port=5000 --target-port=80 #Service Banckend
+    #- kubectl run bluebankfront --image=pm44019/bluebankbancafe:v4 --port=81 --env="WS_ROOT_URL=http://localhost:5000/"  # Pod Frontend
+    #- kubectl expose pod bluebankfront --type=LoadBalancer --port=4200 --target-port=81 #Service Frontend
+  tags:
+    - linux
+  only:
+    - master

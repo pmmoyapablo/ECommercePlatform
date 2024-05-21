@@ -35,10 +35,10 @@ RUN rm -rf /usr/share/nginx/html/*
 #FROM build AS final
 #WORKDIR /app
 #Copio la salida del proyecto en la ruta del Apache Nginx
-COPY frontend-amaris-angular/dist/angular-solid/ /usr/share/nginx/html
+COPY ECommerce.Frontend/dist/angular-solid/ /usr/share/nginx/html
 
 # Copiar la configuración de nginx dentro del contenedor
-COPY frontend-amaris-angular/nginx.conf /etc/nginx/conf.d/default.conf
+COPY ECommerce.Frontend/nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
 #ENTRYPOINT ["ng", "serve"]

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluebank-app-front-deployment
+spec:
+  selector:
+   matchLabels:
+    app: bluebankappfront
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: bluebankappfront
+    spec:
+      containers:
+        - name: bluebank-app-front
+          image: pm44019/bluebankbancafe:v5
+          env:
+          - name: WS_ROOT_URL
+            value: "http://localhost:5000/"
+          imagePullPolicy: IfNotPresent          
+          ports:
+            - containerPort: 81
+              name: blueappfport

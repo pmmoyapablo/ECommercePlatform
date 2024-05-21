@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bluebank-app-back-deployment
+spec:
+  selector:
+   matchLabels:
+    app: bluebankappback
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: bluebankappback
+    spec:
+      containers:
+        - name: bluebank-app-back
+          image: pm44019/bluebankbancaserviceswebapi:v4
+          env:
+          - name: DB_CONNECTION_STRING
+            value: "Server=devopstester.database.windows.net;Database=BlueBank;User=devopstesteruser;Password=xqenjLInMw1OZxD"
+          - name: ASPNETCORE_ENVIRONMENT
+            value: "Development"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 5000
+              name: blueappbport

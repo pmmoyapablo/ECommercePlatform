@@ -1,0 +1,19 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bluebank-app-back-service
+  labels:
+    app: bluebankappback
+spec:
+  #clusterIP: 10.96.1.2
+  #ipFamilies:
+  #- IPv4   
+  ports:
+  - name: bluebankappback
+    port: 5000
+    targetPort: 80
+    #nodePort : 30780 
+  type: LoadBalancer
+  #type: NodePort
+  selector:
+   app: bluebankappback
