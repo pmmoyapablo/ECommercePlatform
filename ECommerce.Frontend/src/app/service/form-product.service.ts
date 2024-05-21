@@ -4,10 +4,10 @@ import { FormBuilder, Validators } from "@angular/forms";
 @Injectable({
   providedIn: "root",
 })
-export class FormEmployeeService {
+export class FormProductService {
   constructor(private formBuilder: FormBuilder) {}
 
-  newFormEmployee(d?:any) {
+  newFormProduct(d?:any) {
     return this.formBuilder.group({
       id: [d?.id, Validators.nullValidator],
     });

@@ -3,29 +3,27 @@
   <div>
     <label for="id">ID:</label>
     <input type="text" id="id" formControlName="id">
-    <button type="submit">Buscar</button>
+    <button type="submit">Search</button>
   </div>
 </form>
 
-<table>
+<table border="1">
   <thead>
     <tr>
       <th>ID</th>
-      <th>Nombre</th>
-      <th>Edad</th>
-      <th>Salario Mes</th>
-      <th>Salario Anual</th>
-      <th>Imagen</th>
+      <th>Description</th>
+      <th>Date</th>
+      <th>Price</th>
+      <th>Category</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let employee of employees">
-      <td>{{ employee.id }}</td>
-      <td>{{ employee.name }}</td>
-      <td>{{ employee.age }}</td>
-      <td>{{ employee.salary }}</td>
-      <td>{{ employee.salaryAnual }}</td>
-      <td>{{ employee.image }}</td>
+    <tr *ngFor="let product of products">
+      <td>{{ product.id }}</td>
+      <td>{{ product.description }}</td>
+      <td>{{ product.dateCreated }}</td>
+      <td>{{ product.price }}</td>
+      <td>{{ product.category }}</td>
     </tr>
   </tbody>
 </table>

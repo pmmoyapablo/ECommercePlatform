@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ResponceList } from './models/response_list.model'
-import { ResponceObject } from './models/response_object.model'
-import { EmployeeService } from './service/employee.service'
-import { FormEmployeeService } from './service/form-employee.service'
+import { ProductService } from './service/product.service'
+import { FormProductService } from './service/form-product.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { Employee } from './models/employee.model';
+import { Product } from './models/product.model';
 
 
 @Component({
@@ -14,50 +11,50 @@ import { Employee } from './models/employee.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit{
-  title = 'Prueba Amaris';
-  employees: Employee[] = [];
-  employee: Employee | undefined;
+  title = 'E-Comerce Frontend';
+  products: Product[] = [];
+  product: Product | undefined;
   searchForm!: FormGroup;
   
-  constructor(private employeeService: EmployeeService,
-    private formEmployeeService: FormEmployeeService) {
-    this.searchForm = this.formEmployeeService.newFormEmployee(this.searchForm);
+  constructor(private productService: ProductService,
+    private formProductService: FormProductService) {
+    this.searchForm = this.formProductService.newFormProduct(this.searchForm);
   }
 
   ngOnInit() {
-    this.loadEmployees();
+    this.loadProducts();
   }
 
   onSubmit(){
-     const employeeForm = this.searchForm.value;
-     console.log('Formulario:', employeeForm);
-     this.findEmployee(employeeForm.id);
+     const productForm = this.searchForm.value;
+     console.log('Formulario:', productForm);
+     this.findProduct(productForm.id);
 
-     if(this.employee != null)
+     if(this.product != null)
      {
-      let employeeSelected = this.employees.filter(emp => emp.id == this.employee?.id);
-      this.employees = employeeSelected;
+      let employeeSelected = this.products.filter(emp => emp.id == this.product?.id);
+      this.products = employeeSelected;
      }
   }
 
-  private loadEmployees(): void {
-    this.employeeService.getAllEmployees().subscribe({
-      next: (data: ResponceList) => {
-        this.employees = data.Data;
+  private loadProducts(): void {
+    this.productService.getAllProducts().subscribe({
+      next: (data: Product[]) => {
+        this.products = data;
       },
       error: (error) => {
-        console.error('Error al obtener la lista de empleados:', error);
+        console.error('Error al obtener la lista de productos:', error);
       },
     });
   }
 
-  private findEmployee(id: string): void {
-    this.employeeService.getOneEmployee(id).subscribe({
-      next: (data: ResponceObject) => {
-        this.employee = data.Data;
+  private findProduct(id: string): void {
+    this.productService.getOneProduct(id).subscribe({
+      next: (data: Product) => {
+        this.product = data;
       },
       error: (error) => {
-        console.error('Error al obtener el empleado:', error);
+        console.error('Error al obtener el producto:', error);
       },    
     });
   }
