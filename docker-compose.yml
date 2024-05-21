@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  
+  ecomerce.api.product:
+    image: ${DOCKER_REGISTRY-}ecomerceapiproduct
+    build:
+      context: .
+      dockerfile: ECommerce.Api.ProductCatalog/Dockerfile
+    depends_on:
+      - sqlserver-vaxi
+
+  ecomerce.api.order:
+    image: ${DOCKER_REGISTRY-}ecomerceapiorder
+    build:
+      context: .
+      dockerfile: ECommerce.Api.OrderManagement/Dockerfile
+    depends_on:
+      - mysql-vaxi
+
+  ecomerce.api.gateway:
+    image: ${DOCKER_REGISTRY-}ecomerceapigateway
+    build:
+      context: .
+      dockerfile: ECommerce.Api.Gateway/Dockerfile
+
+  ecomerce.frontend:
+    image: ${DOCKER_REGISTRY-}ecomercefrontend
+    build:
+      context: .
+      dockerfile: ECommerce.Frontend/Dockerfile
+
+  mysql-vaxi:
+    container_name: mysql-vaxi
+    image: mysql:latest
+    restart: always
+
+  sqlserver-vaxi:
+    container_name: sqlserver-vaxi
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    restart: always

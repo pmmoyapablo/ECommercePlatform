@@ -1,0 +1,57 @@
+version: '3.4'
+
+services:
+
+  ecomerce.api.product:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "6105:80"
+    networks:
+      - my-network
+
+  ecomerce.api.order:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "6106:8080"
+    networks:
+      - my-network
+
+  ecomerce.api.gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "6107:80"
+    networks:
+      - my-network
+
+  ecomerce.frontend:
+    restart: always
+    ports:
+      - 4200:81
+    networks:
+      - my-network
+
+  mysql-vaxi:
+    environment:
+      - MYSQL_ROOT_PASSWORD=VaxiDrez$
+      - MYSQL_DATABASE=ordermanagement
+    ports:
+      - "3306:3306"
+    networks:
+      - my-network
+
+  sqlserver-vaxi:
+    environment:
+      - SA_PASSWORD=VaxiDrez$
+      - ACCEPT_EULA=Y
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge

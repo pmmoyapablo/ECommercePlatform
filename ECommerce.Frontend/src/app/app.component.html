@@ -1,0 +1,31 @@
+
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="id">ID:</label>
+    <input type="text" id="id" formControlName="id">
+    <button type="submit">Buscar</button>
+  </div>
+</form>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Edad</th>
+      <th>Salario Mes</th>
+      <th>Salario Anual</th>
+      <th>Imagen</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of employees">
+      <td>{{ employee.id }}</td>
+      <td>{{ employee.name }}</td>
+      <td>{{ employee.age }}</td>
+      <td>{{ employee.salary }}</td>
+      <td>{{ employee.salaryAnual }}</td>
+      <td>{{ employee.image }}</td>
+    </tr>
+  </tbody>
+</table>
